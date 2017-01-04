@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import page from 'page';
-import { flowRight, includes, keys, omit, memoize } from 'lodash';
+import { flowRight, includes, omit, memoize } from 'lodash';
 import { connect } from 'react-redux';
 import { localize } from 'i18n-calypso';
 import classNames from 'classnames';
@@ -50,6 +50,7 @@ import { successNotice, errorNotice } from 'state/notices/actions';
 import { removeNotice } from 'state/notices/actions';
 import { getSelectedSiteId } from 'state/ui/selectors';
 import QuerySiteSettings from 'components/data/query-site-settings';
+import { phpToMomentDatetimeFormat } from 'lib/formatting';
 
 class SiteSettingsFormGeneral extends Component {
 	getFormSettings( settings ) {
@@ -656,26 +657,9 @@ class SiteSettingsFormGeneral extends Component {
 			translate,
 		} = this.props;
 
-		const phpToMoment = {
-			d: 'DD',
-			jS: 'Mo',
-			j: 'D',
-			S: 'Mo',
-			l: 'dddd',
-			D: 'ddd',
-			m: 'MM',
-			n: 'M',
-			F: 'MMMM',
-			M: 'MMM',
-			Y: 'YYYY',
-			y: 'YY',
-		};
 		const defaultFormats = [ 'F j, Y', 'Y-m-d', 'm/d/Y', 'd/m/Y' ];
-		const mapFormats = str => str.replace(
-			new RegExp( keys( phpToMoment ).join( '|' ), 'g' ),
-			match => phpToMoment[ match ],
-		);
 		const today = moment();
+
 		return (
 			<FormFieldset>
 				<FormLabel>
@@ -690,7 +674,7 @@ class SiteSettingsFormGeneral extends Component {
 							onChange={ this.handleRadio }
 							disabled={ isRequestingSettings }
 						/>
-						<span>{ today.format( mapFormats( format ) ) }</span>
+						<span>{ today.format( phpToMomentDatetimeFormat( format ) ) }</span>
 					</FormLabel>
 				) }
 				<FormLabel>
@@ -711,7 +695,7 @@ class SiteSettingsFormGeneral extends Component {
 							onChange={ this.onChangeField( 'date_format' ) }
 							disabled={ isRequestingSettings }
 						/>
-						{ date_format ? today.format( mapFormats( date_format ) ) : '' }
+						{ date_format ? today.format( phpToMomentDatetimeFormat( date_format ) ) : '' }
 					</span>
 				</FormLabel>
 			</FormFieldset>
