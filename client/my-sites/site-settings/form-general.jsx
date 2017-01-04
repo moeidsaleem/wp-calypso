@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import page from 'page';
-import { flowRight, omit, memoize } from 'lodash';
+import { flowRight, includes, keys, omit, memoize } from 'lodash';
 import { connect } from 'react-redux';
 import { localize } from 'i18n-calypso';
 import classNames from 'classnames';
@@ -64,6 +64,8 @@ class SiteSettingsFormGeneral extends Component {
 			lang_id: settings.lang_id,
 			blog_public: settings.blog_public,
 			timezone_string: settings.timezone_string,
+			date_format: settings.date_format,
+
 			jetpack_relatedposts_allowed: settings.jetpack_relatedposts_allowed,
 			jetpack_sync_non_public_post_stati: settings.jetpack_sync_non_public_post_stati,
 
@@ -106,6 +108,7 @@ class SiteSettingsFormGeneral extends Component {
 			blogdescription: '',
 			lang_id: '',
 			timezone_string: '',
+			date_format: '',
 			blog_public: '',
 			admin_url: '',
 			jetpack_relatedposts_allowed: false,
@@ -645,6 +648,76 @@ class SiteSettingsFormGeneral extends Component {
 		);
 	}
 
+	dateFormatOption() {
+		const {
+			fields: { date_format },
+			isRequestingSettings,
+			moment,
+			translate,
+		} = this.props;
+
+		const phpToMoment = {
+			d: 'DD',
+			jS: 'Mo',
+			j: 'D',
+			S: 'Mo',
+			l: 'dddd',
+			D: 'ddd',
+			m: 'MM',
+			n: 'M',
+			F: 'MMMM',
+			M: 'MMM',
+			Y: 'YYYY',
+			y: 'YY',
+		};
+		const defaultFormats = [ 'F j, Y', 'Y-m-d', 'm/d/Y', 'd/m/Y' ];
+		const mapFormats = str => str.replace(
+			new RegExp( keys( phpToMoment ).join( '|' ), 'g' ),
+			match => phpToMoment[ match ],
+		);
+		const today = moment();
+		return (
+			<FormFieldset>
+				<FormLabel>
+					{ translate( 'Date Format' ) }
+				</FormLabel>
+				{ defaultFormats.map( ( format, key ) =>
+					<FormLabel key={ key }>
+						<FormRadio
+							name="date_format"
+							value={ format }
+							checked={ format === date_format }
+							onChange={ this.handleRadio }
+							disabled={ isRequestingSettings }
+						/>
+						<span>{ today.format( mapFormats( format ) ) }</span>
+					</FormLabel>
+				) }
+				<FormLabel>
+					<FormRadio
+						name="date_format"
+						value={ date_format }
+						checked={ ! includes( defaultFormats, date_format ) }
+						onChange={ this.handleRadio }
+						disabled={ isRequestingSettings }
+					/>
+					<span>
+						{ translate( 'Custom' ) }
+						<FormInput
+							name="date_format_custom"
+							id="date_format_custom"
+							type="text"
+							value={ date_format || defaultFormats[ 0 ] }
+							onChange={ this.onChangeField( 'date_format' ) }
+							disabled={ isRequestingSettings }
+						/>
+						{ date_format ? today.format( mapFormats( date_format ) ) : '' }
+					</span>
+				</FormLabel>
+			</FormFieldset>
+		);
+	}
+
 	renderJetpackSyncPanel() {
 		if ( ! config.isEnabled( 'jetpack/sync-panel' ) ) {
 			return null;
@@ -730,6 +803,7 @@ class SiteSettingsFormGeneral extends Component {
 						{ this.blogAddress() }
 						{ this.languageOptions() }
 						{ this.Timezone() }
+						{ this.dateFormatOption() }
 						{ this.holidaySnowOption() }
 					</form>
 				</Card>
