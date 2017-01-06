@@ -148,14 +148,12 @@ export class MySitesSidebar extends Component {
 			return null;
 		}
 
-		const isSelected = this.isItemLinkSelected( '/stats' );
-
 		return (
 			<li className={ this.itemLinkClass( '/stats', 'stats' ) }>
 				<SiteStatsStickyLink onClick={ this.onNavigate }>
 					<Gridicon icon="stats-alt" size={ 24 } />
 					<span className="menu-link-text">{ this.props.translate( 'Stats' ) }</span>
-					{ ! isSelected && <StatsSparkline className="sidebar__sparkline" siteId={ get( site, 'ID' ) } /> }
+					<StatsSparkline className="sidebar__sparkline" siteId={ get( site, 'ID' ) } />
 				</SiteStatsStickyLink>
 			</li>
 		);
