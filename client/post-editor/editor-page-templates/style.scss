@@ -3,3 +3,9 @@
 	display: inline-block;
 	margin-bottom: 6px;
 }
+
+.editor-page-templates__select-dropdown {
+	.select-dropdown__item {
+		text-overflow: initial;
+	}
+}

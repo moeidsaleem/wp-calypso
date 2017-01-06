@@ -81,7 +81,7 @@ class EditorPageTemplates extends Component {
 					<AccordionSection>
 						<EditorDrawerLabel labelText={ translate( 'Page Template' ) }>
 							<EditorThemeHelp className="editor-page-templates__help-link" />
-							<SelectDropdown selectedText={ this.getSelectedTemplateText() }>
+							<SelectDropdown className="editor-page-templates__select-dropdown" selectedText={ this.getSelectedTemplateText() }>
 								{ map( templates, ( { file, label } ) => (
 									/* eslint-disable react/jsx-no-bind */
 									// jsx-no-bind disabled because while it's possible
