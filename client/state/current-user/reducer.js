@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { combineReducers } from 'redux';
-import get from 'lodash/get';
+import { get, isEqual, reduce } from 'lodash';
 
 /**
  * Internal dependencies
@@ -13,9 +13,10 @@ import {
 	SITE_RECEIVE,
 	SITE_PLANS_FETCH_COMPLETED,
 	SITES_RECEIVE,
+	SITES_UPDATE,
 	PLANS_RECEIVE
 } from 'state/action-types';
-import { createReducer } from 'state/utils';
+import { createReducer, withSchemaValidation } from 'state/utils';
 import { idSchema, capabilitiesSchema, currencyCodeSchema, flagsSchema } from './schema';
 import gravatarStatus from './gravatar-status/reducer';
 
@@ -60,28 +61,35 @@ export const currencyCode = createReducer( null, {
  * @param  {Object} action Action payload
  * @return {Object}        Updated state
  */
-export const capabilities = createReducer( {}, {
-	[ SITE_RECEIVE ]: ( state, action ) => {
-		if ( ! action.site.capabilities ) {
-			return state;
+export const capabilities = withSchemaValidation(
+	capabilitiesSchema,
+	( state = {}, action ) => {
+		switch ( action.type ) {
+			case SITE_RECEIVE:
+			case SITES_RECEIVE:
+			case SITES_UPDATE:
+				const sites = action.site ? [ action.site ] : action.sites;
+				return reduce( sites, ( memo, site ) => {
+					if ( SITES_UPDATE === action.type && ! memo[ site.ID ] ) {
+						return memo;
+					}
+
+					if ( ! site.capabilities || isEqual( site.capabilities, memo[ site.ID ] ) ) {
+						return memo;
+					}
+
+					if ( memo === state ) {
+						memo = { ...state };
+					}
+
+					memo[ site.ID ] = site.capabilities;
+					return memo;
+				}, state );
 		}
 
-		return Object.assign( {}, state, {
-			[ action.site.ID ]: action.site.capabilities
-		} );
-	},
-	[ SITES_RECEIVE ]: ( state, action ) => {
-		const siteCapabilities = action.sites.reduce( ( memo, site ) => {
-			if ( site.capabilities ) {
-				memo[ site.ID ] = site.capabilities;
-			}
-
-			return memo;
-		}, {} );
-
-		return Object.assign( {}, state, siteCapabilities );
+		return state;
 	}
-}, capabilitiesSchema );
+);
 
 export default combineReducers( {
 	id,
