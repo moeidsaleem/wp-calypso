@@ -109,4 +109,14 @@ module.exports = {
 		defaultVariation: 'disabled',
 		allowExistingUsers: true,
 	},
+
+	domainSearchForm: {
+		datestamp: '20170110',
+		variations: {
+			domainSearchWithoutSubmit: 100,
+			domainSearchWithSubmit: 0,
+		},
+		defaultVariation: 'domainSearchWithoutSubmit',
+		allowExistingUsers: true,
+	},
 };

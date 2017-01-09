@@ -37,6 +37,7 @@ import {
 	getDomainsSuggestionsError
 } from 'state/domains/suggestions/selectors';
 import support from 'lib/url/support';
+import { abtest } from 'lib/abtest';
 
 const domains = wpcom.domains();
 
@@ -226,7 +227,7 @@ const RegisterDomainStep = React.createClass( {
 	render: function() {
 		return (
 			<div className="register-domain-step">
-				{ this.searchForm() }
+				{ ( 'domainSearchWithoutSubmit' === abtest( 'domainSearchForm' ) ) ? this.searchForm() : this.searchFormWithSubmit() }
 				{ this.dotBlogNotice() }
 				{ this.notices() }
 				{ this.content() }
