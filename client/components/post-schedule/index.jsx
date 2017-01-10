@@ -18,8 +18,8 @@ import Clock from './clock';
 import Header from './header';
 import utils from './utils';
 
-var user = new User(),
-	noop = () => {};
+const user = new User();
+const noop = () => {};
 
 class PostSchedule extends Component {
 	constructor( props ) {
@@ -79,7 +79,7 @@ class PostSchedule extends Component {
 
 	getEventsFromPosts( postsList = [] ) {
 		return postsList.map( post => {
-			let localDate = this.getDateToUserLocation( post.date );
+			const localDate = this.getDateToUserLocation( post.date );
 
 			return {
 				id: post.ID,
@@ -124,14 +124,14 @@ class PostSchedule extends Component {
 	/** Renders **/
 
 	renderInputChrono() {
-		var lang = user.getLanguage(),
-			date = this.getCurrentDate(),
-			chronoText;
+		const lang = user.getLanguage();
+		const date = this.getCurrentDate();
+		let chronoText;
 
 		if ( this.state.localizedDate ) {
-			let today = i18n.moment().startOf( 'day' ),
-				selected = i18n.moment( date ).startOf( 'day' ),
-				diffInMinutes = selected.diff( today, 'days' );
+			const today = i18n.moment().startOf( 'day' );
+			const selected = i18n.moment( date ).startOf( 'day' );
+			const diffInMinutes = selected.diff( today, 'days' );
 
 			if ( -7 <= diffInMinutes && diffInMinutes <= 6 ) {
 				chronoText = date.calendar();
@@ -141,7 +141,7 @@ class PostSchedule extends Component {
 		}
 
 		return (
-			<div className="chrono__container">
+			<div className="post-schedule__input-chrono">
 				<InputChrono
 					value={ chronoText }
 					placeholder={ date.calendar() }
