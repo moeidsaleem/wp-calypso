@@ -98,7 +98,8 @@ export const PLANS_LIST = {
 			FEATURE_BASIC_DESIGN,
 			FEATURE_3GB_STORAGE
 		],
-		getBillingTimeFrame: () => i18n.translate( 'for life' )
+		getBillingTimeFrame: () => i18n.translate( 'for life' ),
+		getDiscountedBillingTimeFrame: () => {},
 	},
 
 	[ PLAN_PERSONAL ]: {
@@ -123,7 +124,8 @@ export const PLANS_LIST = {
 			FEATURE_6GB_STORAGE,
 			FEATURE_NO_ADS
 		],
-		getBillingTimeFrame: () => i18n.translate( 'per month, billed yearly' )
+		getBillingTimeFrame: () => i18n.translate( 'per month, billed yearly' ),
+		getDiscountedBillingTimeFrame: () => i18n.translate( 'per month for one year, billed yearly' ),
 	},
 
 	[ PLAN_PREMIUM ]: {
@@ -157,7 +159,8 @@ export const PLANS_LIST = {
 			FEATURE_ADVANCED_DESIGN,
 			FEATURE_13GB_STORAGE
 		],
-		getBillingTimeFrame: () => i18n.translate( 'per month, billed yearly' )
+		getBillingTimeFrame: () => i18n.translate( 'per month, billed yearly' ),
+		getDiscountedBillingTimeFrame: () => i18n.translate( 'per month for one year, billed yearly' ),
 	},
 
 	[ PLAN_BUSINESS ]: {
@@ -199,7 +202,8 @@ export const PLANS_LIST = {
 			FEATURE_VIDEO_UPLOADS,
 			FEATURE_LIVE_COURSES
 		],
-		getBillingTimeFrame: () => i18n.translate( 'per month, billed yearly' )
+		getBillingTimeFrame: () => i18n.translate( 'per month, billed yearly' ),
+		getDiscountedBillingTimeFrame: () => i18n.translate( 'per month for one year, billed yearly' ),
 	},
 
 	[ PLAN_JETPACK_FREE ]: {
@@ -215,7 +219,8 @@ export const PLANS_LIST = {
 			FEATURE_TRAFFIC_TOOLS,
 			FEATURE_MANAGE
 		],
-		getBillingTimeFrame: () => i18n.translate( 'for life' )
+		getBillingTimeFrame: () => i18n.translate( 'for life' ),
+		getDiscountedBillingTimeFrame: () => {},
 	},
 	[ PLAN_JETPACK_PREMIUM ]: {
 		getTitle: () => i18n.translate( 'Premium' ),
@@ -236,7 +241,8 @@ export const PLANS_LIST = {
 			FEATURE_PREMIUM_SUPPORT,
 			FEATURE_MALWARE_SCANNING_DAILY
 		],
-		getBillingTimeFrame: () => i18n.translate( 'per month, billed yearly' )
+		getBillingTimeFrame: () => i18n.translate( 'per month, billed yearly' ),
+		getDiscountedBillingTimeFrame: () => {},
 	},
 	[ PLAN_JETPACK_PERSONAL ]: {
 		getTitle: () => i18n.translate( 'Personal' ),
@@ -256,7 +262,8 @@ export const PLANS_LIST = {
 			FEATURE_EASY_SITE_MIGRATION,
 			FEATURE_PREMIUM_SUPPORT
 		],
-		getBillingTimeFrame: () => i18n.translate( 'per month, billed yearly' )
+		getBillingTimeFrame: () => i18n.translate( 'per month, billed yearly' ),
+		getDiscountedBillingTimeFrame: () => {},
 	},
 
 	[ PLAN_JETPACK_PREMIUM_MONTHLY ]: {
@@ -277,7 +284,8 @@ export const PLANS_LIST = {
 			FEATURE_PREMIUM_SUPPORT,
 			FEATURE_MALWARE_SCANNING_DAILY
 		],
-		getBillingTimeFrame: () => i18n.translate( 'per month, billed monthly' )
+		getBillingTimeFrame: () => i18n.translate( 'per month, billed monthly' ),
+		getDiscountedBillingTimeFrame: () => {},
 	},
 
 	[ PLAN_JETPACK_PERSONAL_MONTHLY ]: {
@@ -298,7 +306,8 @@ export const PLANS_LIST = {
 			FEATURE_EASY_SITE_MIGRATION,
 			FEATURE_PREMIUM_SUPPORT
 		],
-		getBillingTimeFrame: () => i18n.translate( 'per month, billed monthly' )
+		getBillingTimeFrame: () => i18n.translate( 'per month, billed monthly' ),
+		getDiscountedBillingTimeFrame: () => {},
 	},
 
 	[ PLAN_JETPACK_BUSINESS ]: {
@@ -323,7 +332,8 @@ export const PLANS_LIST = {
 			FEATURE_ADVANCED_SEO,
 			isEnabled( 'jetpack/google-analytics' ) && FEATURE_GOOGLE_ANALYTICS
 		] ),
-		getBillingTimeFrame: () => i18n.translate( 'per month, billed yearly' )
+		getBillingTimeFrame: () => i18n.translate( 'per month, billed yearly' ),
+		getDiscountedBillingTimeFrame: () => {},
 
 	},
 	[ PLAN_JETPACK_BUSINESS_MONTHLY ]: {
@@ -348,7 +358,8 @@ export const PLANS_LIST = {
 			FEATURE_ADVANCED_SEO,
 			isEnabled( 'jetpack/google-analytics' ) && FEATURE_GOOGLE_ANALYTICS
 		] ),
-		getBillingTimeFrame: () => i18n.translate( 'per month, billed monthly' )
+		getBillingTimeFrame: () => i18n.translate( 'per month, billed monthly' ),
+		getDiscountedBillingTimeFrame: () => {},
 	}
 };
 

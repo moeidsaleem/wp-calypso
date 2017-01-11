@@ -71,6 +71,7 @@ class PlanFeaturesHeader extends Component {
 	getBillingTimeframe() {
 		const {
 			billingTimeFrame,
+			discountedBillingTimeFrame,
 			discountPrice,
 			isPlaceholder,
 			site
@@ -81,11 +82,15 @@ class PlanFeaturesHeader extends Component {
 			'is-placeholder': isPlaceholder
 		} );
 
+		let timeFrame = isDiscounted ? discountedBillingTimeFrame : billingTimeFrame;
+
+		if ( isPlaceholder ) {
+			timeFrame = '';
+		}
+
 		if ( ! site.jetpack || this.props.planType === PLAN_JETPACK_FREE ) {
 			return (
-				<p className={ timeframeClasses } >
-					{ ! isPlaceholder ? billingTimeFrame : '' }
-				</p>
+				<p className={ timeframeClasses } >{ timeFrame }</p>
 			);
 		}
 

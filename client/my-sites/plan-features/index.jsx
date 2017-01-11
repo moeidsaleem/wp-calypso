@@ -242,6 +242,7 @@ class PlanFeatures extends Component {
 						title={ planConstantObj.getTitle() }
 						planType={ planName }
 						rawPrice={ rawPrice }
+						discountedBillingTimeFrame={ planConstantObj.getDiscountedBillingTimeFrame() }
 						discountPrice={ discountPrice }
 						billingTimeFrame={ planConstantObj.getBillingTimeFrame() }
 						isPlaceholder={ isPlaceholder }
