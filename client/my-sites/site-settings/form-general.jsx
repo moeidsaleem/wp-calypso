@@ -4,7 +4,13 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import page from 'page';
-import { flowRight, includes, omit, memoize } from 'lodash';
+import {
+	flowRight,
+	includes,
+	omit,
+	memoize,
+	startsWith,
+} from 'lodash';
 import { connect } from 'react-redux';
 import { localize } from 'i18n-calypso';
 import classNames from 'classnames';
@@ -661,7 +667,7 @@ class SiteSettingsFormGeneral extends Component {
 
 	dateFormatOption() {
 		const {
-			fields: { date_format },
+			fields: { date_format, timezone_string },
 			isRequestingSettings,
 			moment,
 			translate,
@@ -669,7 +675,9 @@ class SiteSettingsFormGeneral extends Component {
 
 		const defaultFormats = [ 'F j, Y', 'Y-m-d', 'm/d/Y', 'd/m/Y' ];
 		const isCustomFormat = ! includes( defaultFormats, date_format );
-		const today = moment();
+		const today = startsWith( timezone_string, 'UTC' )
+			? moment().utcOffset( timezone_string.substring( 3 ) * 60 )
+			: moment.tz( timezone_string );
 
 		return (
 			<FormFieldset>
@@ -717,7 +725,7 @@ class SiteSettingsFormGeneral extends Component {
 
 	timeFormatOption() {
 		const {
-			fields: { time_format },
+			fields: { time_format, timezone_string },
 			isRequestingSettings,
 			moment,
 			translate,
@@ -725,7 +733,9 @@ class SiteSettingsFormGeneral extends Component {
 
 		const defaultFormats = [ 'g:i a', 'g:i A', 'H:i' ];
 		const isCustomFormat = ! includes( defaultFormats, time_format );
-		const today = moment();
+		const today = startsWith( timezone_string, 'UTC' )
+			? moment().utcOffset( timezone_string.substring( 3 ) * 60 )
+			: moment.tz( timezone_string );
 
 		return (
 			<FormFieldset>
