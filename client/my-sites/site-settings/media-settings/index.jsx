@@ -11,13 +11,11 @@ import { connect } from 'react-redux';
 import SectionHeader from 'components/section-header';
 import Card from 'components/card';
 import Button from 'components/button';
-import FormSelect from 'components/forms/form-select';
-import FormLabel from 'components/forms/form-label';
-import FormCheckbox from 'components/forms/form-checkbox';
 import JetpackModuleToggle from '../jetpack-module-toggle';
 import FormFieldset from 'components/forms/form-fieldset';
 import InfoPopover from 'components/info-popover';
 import ExternalLink from 'components/external-link';
+import CarouselSettings from './carousel-settings';
 import { protectForm } from 'lib/protect-form';
 
 import {
@@ -108,34 +106,15 @@ class MediaSettings extends Component {
 							label={ props.translate( 'Transform image galleries into full screen slideshows.' ) }
 							/>
 						{
-							( props.carouselActive && (
-								<div className="media-settings__module-settings is-indented">
-									<FormLabel>
-										<FormCheckbox
-											checked={ this.state.carousel_display_exif }
-											onChange={ this.handleCarouselDisplayExif }
-											disabled={ props.submittingForm }
-											name="carousel_display_exif" />
-										<span>{ props.translate( 'Show photo metadata (Exif) in carousel, when available' ) }</span>
-									</FormLabel>
-									<FormLabel htmlFor="carousel_background_color">
-										{ props.translate( 'Background color' ) }
-									</FormLabel>
-									<FormSelect
-										value={ this.state.carousel_background_color }
-										onChange={ this.handleCarouselBackgroundColor }
-										disabled={ props.submittingForm }
-										name="carousel_background_color"
-										id="carousel_background_color" >
-										<option value={ 'black' } key={ 'carousel_background_color_black' }>
-											{ props.translate( 'Black' ) }
-										</option>
-										<option value={ 'white' } key={ 'carousel_background_color_white' }>
-											{ props.translate( 'White' ) }
-										</option>
-									</FormSelect>
-								</div>
-							) )
+							props.carouselActive && (
+								<CarouselSettings
+									carousel_display_exif={ this.state.carousel_display_exif }
+									carousel_background_color={ this.state.carousel_background_color }
+									submittingForm={ props.submittingForm }
+									handleCarouselDisplayExif={ props.handleCarouselDisplayExif }
+									handleCarouselBackgroundColor={ props.handleCarouselBackgroundColor }
+									localize={ props.localize } />
+							)
 						}
 					</FormFieldset>
 				</Card>
